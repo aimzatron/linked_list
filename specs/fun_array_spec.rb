@@ -194,7 +194,7 @@ require './fun_array'
       expect(@array[0]).to eq 'a'
     end
 
-    xit "removes duplicates with uniq method" do
+    it "removes duplicates with uniq method" do
       @array << "lizard"
       @array << "monkey"
       @array << "tiger"
