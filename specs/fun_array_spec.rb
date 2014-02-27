@@ -145,9 +145,87 @@ require './fun_array'
       @array << 'b'
 
       expect(@array[0] == 'a')
-      
+
       @array.pop('a')
       expect(@array[0] == 'b')
+    end
+
+    it "can tell you if it includes something" do
+      @array << 'd'
+
+      expect(@array.include?('a')).to be_false
+
+      @array << 'a'
+      @array << 'b'
+      @array << 'c'
+
+      expect(@array.include?('a')).to be_true
+    end
+
+    it "can retrieve and remove the first item with shift" do
+      @array << 'a'
+      @array << 'b'
+
+      expect(@array.include?('a')).to be_true
+
+      @array.shift
+
+      expect(@array.include?('a')).to be_false
+    end
+
+    it "can remove an item at a certain index" do
+      @array << 'a'
+      @array << 'b'
+
+      expect(@array[0] == 'a')
+
+      @array.delete_at(0)
+
+      expect(@array[0] == 'b')
+    end
+
+    it "can remove nils from array" do
+      @array << 'a'
+      @array << nil
+      @array << 'b'
+
+      @array.compact
+
+      expect(@array[0]).to eq 'a'
+    end
+
+    xit "removes duplicates with uniq method" do
+      @array << "lizard"
+      @array << "monkey"
+      @array << "tiger"
+      @array << "lizard"
+
+      expect(@array.uniq).to eq(FunArray.new(['lizard','monkey','tiger']))
+    end
+
+    it "knows when it is equal to another 'fun' array" do
+      @array2 = FunArray.new
+      expect(@array == @array2).to be_true
+
+      @array2 << 'a'
+      expect(@array == @array2).to be_false
+
+      @array << 'a'
+      expect(@array == @array2).to be_true
+
+      @array << 'b'
+      expect(@array == @array2).to be_false
+
+      @array2 << 'b'
+      expect(@array == @array2).to be_true
+
+    end
+
+    it "can add one 'fun' array to another" do
+      @array << 'monkey'
+
+      appended_array = @array + 'a'
+      expect(appended_array).to eq(FunArray.new(['monkey', 'a']))
     end
 
   end

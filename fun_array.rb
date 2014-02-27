@@ -5,7 +5,13 @@ class FunArray
   attr_accessor :first_link
 
   def initialize(value=nil)
-    self.first_link = Link.new(value) unless value.nil?
+    if value.respond_to?(:each)
+      value.each do |v|
+        self << v
+      end
+    elsif(value)
+      self.first_link = Link.new(value)
+    end
   end
 
   def build_or_get_first_link(item=nil)
@@ -126,6 +132,51 @@ class FunArray
         self.first_link.remove(item)
       end
     end
+  end
+
+  def include?(item)
+    !!self.first_link.find(item) rescue false
+  end
+
+  def shift
+    self.first_link.remove(self.first_link.value)
+  end
+
+  def delete_at(index)
+    self.first_link.remove(self.first_link.value)
+  end
+
+  def compact
+    self.first_link.remove(nil)
+  end
+
+  def uniq
+    unique_array = FunArray.new
+    self.each do |item|
+      unique_array << item unless unique_array.include?(item)
+    end
+    unique_array
+  end
+
+  def ==(item)
+    index = 0
+    item.each do |i|
+      if self[index] != i
+        return false
+      end
+      index += 1
+    end
+
+    if !self[index].nil?
+      return false
+    end
+
+    true
+  end
+
+  def +(array)
+    self.first_link.add(array)
+    return self
   end
 
 end
