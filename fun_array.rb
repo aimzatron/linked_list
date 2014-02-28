@@ -26,7 +26,7 @@ class FunArray
       if link.last?
         link = link.add(nil)
       else
-        link = link.next
+        link = link.tail
       end
         count += 1
     end
@@ -41,7 +41,7 @@ class FunArray
 
     while count < index
       return nil if link.last?
-      link = link.next
+      link = link.tail
       count += 1
     end
 
@@ -72,7 +72,7 @@ class FunArray
   alias_method :push, :<<
 
   def rotate
-    link = self.first_link.next
+    link = self.first_link.tail
     rotated = FunArray.new
 
     link.each do |l|

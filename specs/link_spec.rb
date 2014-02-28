@@ -9,18 +9,20 @@ require './link'
     end
 
     it "adds an element" do
-      expect(@link.add('b').value).to eq 'b'
+      b = @link.add('b')
+      expect(b.head).to eq @link
+      expect(@link.tail).to eq b
     end
 
-    it "returns the next element" do
+    it "returns the tail element" do
       @link.add('b')
-      expect(@link.next.value).to eq 'b'
+      expect(@link.tail.value).to eq 'b'
     end
 
     it "adds additional elements to the end of the list" do
       @link.add('b')
       @link.add('c')
-      expect(@link.next.next.value).to eq 'c'
+      expect(@link.tail.tail.value).to eq 'c'
     end
 
     it "removes a given element from the list" do
@@ -28,8 +30,8 @@ require './link'
       @link.add('c')
       @link.remove('b')
       expect(@link.value).to eq 'a'
-      expect(@link.next.value).to eq 'c'
-      expect(@link.next.next).to be_nil
+      expect(@link.tail.value).to eq 'c'
+      expect(@link.tail.tail).to be_nil
     end
 
     it "finds a given element" do
@@ -44,7 +46,7 @@ require './link'
       @link.add('b')
 
       expect(@link.last?).to be_false
-      expect(@link.next.last?).to be_true
+      expect(@link.tail.last?).to be_true
     end
 
     it "iterates over each item" do
@@ -54,6 +56,15 @@ require './link'
       str = ''
       @link.each{|l| str += l.value}
       expect(str).to eq 'abc'
+    end
+
+    it "can check if it is first" do
+      @link.add('b')
+      @link.add('c')
+
+      expect(@link.first?).to be_true
+      expect(@link.tail.first?).to be_false
+      expect(@link.tail.tail.first?).to be_false
     end
 
   end

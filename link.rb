@@ -1,42 +1,48 @@
 class Link
-  attr_accessor :value, :next
+  attr_accessor :value, :tail, :head
 
-  def initialize(value)
+  def initialize(value, head=nil)
     @value = value
+    @head = head
   end
 
   def add(value)
     if self.last?
-      self.next = Link.new(value)
+      self.tail = Link.new(value, self)
     else
-      self.next.add(value)
+      self.tail.add(value)
     end
   end
 
   def remove(value)
-    if self.value == value
-      self.value = self.next.value
-      self.next = self.next.next
+    if self.value != value
+      self.find(value).remove(value)
     else
-      self.next.remove(value)
-    end
+      puts "#{self.value} : #{self.head} : #{self.tail}"
+      self.tail.head = self.head unless self.last?
+      self.head.tail = self.tail unless self.first?
+    end  
   end
 
   def find(value)
     if self.value == value
        self
     else
-      self.next.find(value)
+      self.tail.find(value)
     end
   end
 
+  def first?
+    self.head.nil?
+  end
+
   def last?
-    self.next.nil?
+    self.tail.nil?
   end
 
   def each(&block)
     yield(self)
-    self.next.each &block unless self.last?
+    self.tail.each &block unless self.last?
   end
 
 end
