@@ -45,8 +45,8 @@ require './link'
     it "knows when it's the last link" do
       @link.add('b')
 
-      expect(@link.last?).to be_false
-      expect(@link.tail.last?).to be_true
+      expect(@link.last?).to be_falsy
+      expect(@link.tail.last?).to be_truthy
     end
 
     it "iterates over each item" do
@@ -62,9 +62,9 @@ require './link'
       @link.add('b')
       @link.add('c')
 
-      expect(@link.first?).to be_true
-      expect(@link.tail.first?).to be_false
-      expect(@link.tail.tail.first?).to be_false
+      expect(@link.first?).to be_truthy
+      expect(@link.tail.first?).to be_falsy
+      expect(@link.tail.tail.first?).to be_falsy
     end
 
   end

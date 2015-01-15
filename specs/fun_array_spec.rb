@@ -81,11 +81,11 @@ require './fun_array'
     end
 
     it "knows when it's empty" do
-      expect(@array.empty?).to be_true
+      expect(@array.empty?).to be_truthy
 
       @array[1] = 'a'
 
-      expect(@array.empty?).to be_false
+      expect(@array.empty?).to be_falsy
     end
 
     it "returns first" do
@@ -153,24 +153,24 @@ require './fun_array'
     it "can tell you if it includes something" do
       @array << 'd'
 
-      expect(@array.include?('a')).to be_false
+      expect(@array.include?('a')).to be_falsy
 
       @array << 'a'
       @array << 'b'
       @array << 'c'
 
-      expect(@array.include?('a')).to be_true
+      expect(@array.include?('a')).to be_truthy
     end
 
     it "can retrieve and remove the first item with shift" do
       @array << 'a'
       @array << 'b'
 
-      expect(@array.include?('a')).to be_true
+      expect(@array.include?('a')).to be_truthy
 
       @array.shift
 
-      expect(@array.include?('a')).to be_false
+      expect(@array.include?('a')).to be_truthy
     end
 
     it "can remove an item at a certain index" do
@@ -205,19 +205,19 @@ require './fun_array'
 
     it "knows when it is equal to another 'fun' array" do
       @array2 = FunArray.new
-      expect(@array == @array2).to be_true
+      expect(@array == @array2).to be_truthy
 
       @array2 << 'a'
-      expect(@array == @array2).to be_false
+      expect(@array == @array2).to be_falsy
 
       @array << 'a'
-      expect(@array == @array2).to be_true
+      expect(@array == @array2).to be_truthy
 
       @array << 'b'
-      expect(@array == @array2).to be_false
+      expect(@array == @array2).to be_falsy
 
       @array2 << 'b'
-      expect(@array == @array2).to be_true
+      expect(@array == @array2).to be_truthy
 
     end
 
